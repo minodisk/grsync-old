@@ -69,7 +69,9 @@ class App extends Component {
             )
           case 'files':
             return (
-              <Files files={files}/>
+              <Files
+                files={files}
+                />
             )
         }
         }()}
@@ -87,11 +89,11 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  const {mode, photos} = state
-  const {dirs} = photos
+  const {mode, dirs, files} = state
   return {
-    mode: mode || 'dirs',
-    dirs
+    mode,
+    dirs,
+    files
   }
 }
 

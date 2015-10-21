@@ -2,6 +2,7 @@ import fetch from 'isomorphic-fetch'
 
 export const REQUEST_PHOTOS = 'REQUEST_PHOTOS'
 export const RECIEVE_PHOTOS = 'RECIEVE_PHOTOS'
+export const SHOW_FILES = 'SHOW_FILES'
 
 function requestPhotos() {
   return {
@@ -26,7 +27,7 @@ function recievePhotos(data) {
   })
   return {
     type: RECIEVE_PHOTOS,
-    dirs: dirs
+    dirs
   }
 }
 
@@ -40,6 +41,8 @@ export function fetchPhotos () {
 }
 
 export function showFiles (files) {
-  console.log('showFiles:', files)
-  return files
+  return {
+    type: SHOW_FILES,
+    files
+  }
 }

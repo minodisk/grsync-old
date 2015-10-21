@@ -21,6 +21,6 @@ export default class Dirs extends Component {
   }
 
   handleDirTouchTap = (e) => {
-    this.props.showFiles(files)
+    this.props.showFiles(this.props.dir.files)
   }
 }

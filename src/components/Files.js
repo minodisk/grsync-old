@@ -1,21 +1,25 @@
 import React, {Component, PropTypes} from 'react'
-import {Card, CardMedia} from 'material-ui/lib/card'
+import {Card, CardTitle, CardMedia} from 'material-ui/lib/card'
+import Paper from 'material-ui/lib/paper'
 
 export default class Photos extends Component {
   static propTypes = {
-    photos: PropTypes.array.isRequired
+    files: PropTypes.array.isRequired
   }
 
   render () {
-    const {photos} = this.props
+    const {files} = this.props
     return (
-      photos.map((photos, i) =>
-        <Card>
-          <CardMedia>
-            <img src={photo.url}/>
-          </CardMedia>
-        </Card>
-      )
+      <div>
+      {files.map((file, i) =>
+        <Paper
+          key={i}
+          style={{width:100, height:100, float:'left'}}
+          >
+          <img src={file.url}/>
+        </Paper>
+      )}
+      </div>
     )
   }
 }
