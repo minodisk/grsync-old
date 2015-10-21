@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 // import { selectReddit, fetchPostsIfNeeded, invalidateReddit } from '../actions'
 import {fetchPhotos, showFiles} from '../actions'
-import Header from '../components/Header'
 import Dirs from '../components/Dirs'
 import Files from '../components/Files'
 
@@ -55,9 +54,6 @@ class App extends Component {
     const {mode, dirs, files} = this.props
     return (
       <div>
-        <Header
-          reload={this.handleReload}
-          />
         {() => {
         switch (mode) {
           case 'dirs':
@@ -77,10 +73,6 @@ class App extends Component {
         }()}
       </div>
     )
-  }
-
-  handleReload = () => {
-    this.props.dispatch(fetchPhotos())
   }
 
   handleShowFiles = (files) => {

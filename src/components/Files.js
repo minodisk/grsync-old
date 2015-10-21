@@ -10,11 +10,11 @@ export default class Photos extends Component {
   render () {
     const {files} = this.props
     return (
-      <div>
+      <div style={{margin:5}}>
       {files.map((file, i) =>
         <Paper
           key={i}
-          style={{width:100, height:100, float:'left'}}
+          style={{width:100, height:100, margin:5, float:'left'}}
           >
           <img src={file.url}/>
         </Paper>
