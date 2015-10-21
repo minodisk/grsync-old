@@ -25,7 +25,8 @@ server.listen(8080)
 
 function resFile (res, filename) {
   res.writeHead(200, {
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
   })
   readFile(join(__dirname, filename), (err, data) => {
     if (err) {

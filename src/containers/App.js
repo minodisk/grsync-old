@@ -1,27 +1,28 @@
-// import {bindActionCreators} from 'redux'
-// import {connect} from 'react-redux'
-// import * as ThumbnailActions from '../actions/thumbnail'
-//
-// function mapStateToProps(state) {
-//   return {
-//   }
-// }
-//
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators(ThumbnailActions, dispatch)
-// }
-//
-// export default connect(mapStateToProps, mapDispatchToProps)(Thumbnail)
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 // import { selectReddit, fetchPostsIfNeeded, invalidateReddit } from '../actions'
+import {fetchPhotos, showFiles} from '../actions'
 import Header from '../components/Header'
+import Dirs from '../components/Dirs'
+import Files from '../components/Files'
 
 class App extends Component {
+  static propTypes = {
+    // selectedReddit: PropTypes.string.isRequired,
+    // posts: PropTypes.array.isRequired,
+    // isFetching: PropTypes.bool.isRequired,
+    // lastUpdated: PropTypes.number,
+    mode: PropTypes.string.isRequired,
+    dirs: PropTypes.array.isRequired,
+    dispatch: PropTypes.func.isRequired
+  }
+
   constructor(props) {
     super(props)
-    this.handleChange = this.handleChange.bind(this)
-    this.handleRefreshClick = this.handleRefreshClick.bind(this)
+    // this.handleChange = this.handleChange.bind(this)
+    // this.handleRefreshClick = this.handleRefreshClick.bind(this)
+
+    this.props.dispatch(fetchPhotos())
   }
 
   componentDidMount() {
@@ -30,58 +31,67 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedReddit !== this.props.selectedReddit) {
+    console.log('componentWillReceiveProps:', nextProps)
+    // if (nextProps.selectedReddit !== this.props.selectedReddit) {
       // const { dispatch, selectedReddit } = nextProps
       // dispatch(fetchPostsIfNeeded(selectedReddit))
-    }
+    // }
   }
 
-  handleChange(nextReddit) {
-    // this.props.dispatch(selectReddit(nextReddit))
-  }
-
-  handleRefreshClick(e) {
-    e.preventDefault()
-
-    // const { dispatch, selectedReddit } = this.props
-    // dispatch(invalidateReddit(selectedReddit))
-    // dispatch(fetchPostsIfNeeded(selectedReddit))
-  }
+  // handleChange(nextReddit) {
+  //   // this.props.dispatch(selectReddit(nextReddit))
+  // }
+  //
+  // handleRefreshClick(e) {
+  //   e.preventDefault()
+  //
+  //   // const { dispatch, selectedReddit } = this.props
+  //   // dispatch(invalidateReddit(selectedReddit))
+  //   // dispatch(fetchPostsIfNeeded(selectedReddit))
+  // }
 
   render() {
     // const { selectedReddit, posts, isFetching, lastUpdated } = this.props
+    const {mode, dirs, files} = this.props
     return (
       <div>
-        <Header/>
+        <Header
+          reload={this.handleReload}
+          />
+        {() => {
+        switch (mode) {
+          case 'dirs':
+            return (
+              <Dirs
+                dirs={dirs}
+                showFiles={this.handleShowFiles}
+                />
+            )
+          case 'files':
+            return (
+              <Files files={files}/>
+            )
+        }
+        }()}
       </div>
     )
   }
-}
 
-App.propTypes = {
-  // selectedReddit: PropTypes.string.isRequired,
-  // posts: PropTypes.array.isRequired,
-  // isFetching: PropTypes.bool.isRequired,
-  // lastUpdated: PropTypes.number,
-  // dispatch: PropTypes.func.isRequired
+  handleReload = () => {
+    this.props.dispatch(fetchPhotos())
+  }
+
+  handleShowFiles = (files) => {
+    this.props.dispatch(showFiles(files))
+  }
 }
 
 function mapStateToProps(state) {
-  // const { selectedReddit, postsByReddit } = state
-  // const {
-  //   isFetching,
-  //   lastUpdated,
-  //   items: posts
-  // } = postsByReddit[selectedReddit] || {
-  //   isFetching: true,
-  //   items: []
-  // }
-
+  const {mode, photos} = state
+  const {dirs} = photos
   return {
-    // selectedReddit,
-    // posts,
-    // isFetching,
-    // lastUpdated
+    mode: mode || 'dirs',
+    dirs
   }
 }
 

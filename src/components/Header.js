@@ -4,19 +4,20 @@ import IconButton from 'material-ui/lib/icon-button'
 import CachedIcon from 'material-ui/lib/svg-icons/action/cached'
 
 export default class Header extends Component {
-  constructor () {
-    super()
+  static propTypes = {
+    reload: PropTypes.func.isRequired
   }
 
-  render () {
+  render (props) {
     return (
       <AppBar
         title="GRSync"
-        iconElementRight={<IconButton onClick={this.handleReloadClick}><CachedIcon/></IconButton>}/>
+        showMenuIconButton={false}
+        iconElementRight={<IconButton onTouchTap={this.onRightIconButtonTouchTap}><CachedIcon/></IconButton>}/>
     )
   }
 
-  handleReloadClick = () => {
-    console.log('reload')
+  onRightIconButtonTouchTap = () => {
+    this.props.reload()
   }
 }

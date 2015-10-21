@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux'
-import header from './header'
+import photos from './photos'
 
 const rootReducer = combineReducers({
-  header
+  photos
 })
 
 export default rootReducer
